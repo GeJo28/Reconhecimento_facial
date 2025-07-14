@@ -23,15 +23,15 @@ models = [
 if webcam.isOpened():
     validacao, frame = webcam.read()
 
-    while validacao:
+    while validacao or frame is not None:
         validacao, frame = webcam.read()
         
         # Passo 2: Reconhecer o rosto
-        resultado = DeepFace.find(img_path=frame, db_path='C:/Users/JOAO/Documents/Reconhecimento_Facial/fotos', model_name=models[2], enforce_detection=False)
+        resultado = DeepFace.find(img_path=frame, db_path='C:/Users/JOAO/Documents/Reconhecimento_Facial/fotos/Joao Vitor', model_name=models[2], enforce_detection=False)
         dataFrame = resultado[0]
         if not dataFrame.empty:
             identidade = dataFrame.loc[0, 'identity']
-            nome = os.path.splitext(os.path.basename(identidade))[0]
+            nome = os.path.basename(os.path.dirname(identidade))
 
             if dataFrame.loc[0, 'distance'] < dataFrame.loc[0, 'threshold']:
                 # Passo 3: Falar o nome
@@ -44,14 +44,12 @@ if webcam.isOpened():
                 engine.runAndWait()
 
                 os.system("rundll32.exe user32.dll,LockWorkStation")
-                continue
+                
         else:
             engine.say("Rosto não consta no Banco de Dados")
             engine.runAndWait()
 
             os.system("rundll32.exe user32.dll,LockWorkStation")
-
-            continue
 
 
 
