@@ -2,8 +2,11 @@ import cv2
 from deepface import DeepFace
 import os
 import pyttsx3
+import sys
 
-webcam = cv2.VideoCapture(0)
+sys.modules['tqdm'] = None
+
+webcam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 engine = pyttsx3.init()
 models = [
   "VGG-Face", 
@@ -27,7 +30,11 @@ if webcam.isOpened():
         validacao, frame = webcam.read()
         
         # Passo 2: Reconhecer o rosto
-        resultado = DeepFace.find(img_path=frame, db_path='C:/Users/JOAO/Documents/Reconhecimento_Facial/fotos/Joao Vitor', model_name=models[2], enforce_detection=False)
+        resultado = DeepFace.find(img_path=frame, 
+                                  db_path='C:/Users/JOAO/Documents/Reconhecimento_Facial/fotos/Joao Vitor', 
+                                  model_name=models[2], 
+                                  enforce_detection=False,
+                                  )
         dataFrame = resultado[0]
         if not dataFrame.empty:
             identidade = dataFrame.loc[0, 'identity']
