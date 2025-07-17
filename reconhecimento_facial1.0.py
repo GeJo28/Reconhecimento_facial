@@ -2,9 +2,7 @@ import cv2
 from deepface import DeepFace
 import os
 import pyttsx3
-import sys
 
-sys.modules['tqdm'] = None
 
 webcam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 engine = pyttsx3.init()
