@@ -50,11 +50,14 @@ if webcam.isOpened():
 
                 os.system("rundll32.exe user32.dll,LockWorkStation")
                 
+                break
         else:
             engine.say("Rosto não consta no Banco de Dados")
             engine.runAndWait()
 
             os.system("rundll32.exe user32.dll,LockWorkStation")
+
+            break
 
 
 
